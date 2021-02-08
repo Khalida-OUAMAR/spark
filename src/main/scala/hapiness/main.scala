@@ -17,7 +17,8 @@ object HappinessData extends App {
 
   val dataframeProcessor = new ProcessData(loadedDf, spark)
 
-  val gov = dataframeProcessor.statistics("Gov")
+  val gov = dataframeProcessor.maxDf("Gov")
+  print(gov)
   // val family = dataframeProcessor.statistics("Family")
   // val economy = dataframeProcessor.statistics("Economy")
   // val score = dataframeProcessor.statistics("Score")
