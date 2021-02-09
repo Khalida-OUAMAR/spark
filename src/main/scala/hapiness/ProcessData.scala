@@ -7,6 +7,9 @@ class ProcessData(df: DataFrame, s: SparkSession){
   val dataframe: DataFrame = df
   val spark: SparkSession = s
 
+  """
+    |
+    |""".stripMargin
   def statistics(parameter: String, df: DataFrame): DataFrame ={
 
     val df_Aggregates = df.agg(
@@ -34,22 +37,6 @@ class ProcessData(df: DataFrame, s: SparkSession){
     val all_stats =  List(stat_2015, stat_2016, stat_2017)
     all_stats
     }
-
-  def maxDf(parameter: String): Double = {
-    val list_max = getStatistic(parameter, "max")
-    val max = list_max.max
-    max
-  }
-  def minDf(parameter: String): Double = {
-    val list_min = getStatistic(parameter, "min")
-    val min = list_min.min
-    min
-  }
-  def avgDf(parameter: String): Double = {
-    val list_avg = getStatistic(parameter, "avg")
-    val avg = list_avg.sum / list_avg.length
-    avg
-  }
 
   def maxDfYear(parameter: String, year: Int): Double = {
     val list_max = getStatistic(parameter, "max")
@@ -87,6 +74,22 @@ class ProcessData(df: DataFrame, s: SparkSession){
                 param + "_2016",
                 param + "_2017")
     minDf.show()
+  }
+
+  def displayLine(df: DataFrame, parameter: String, year: Int, view_name: String): Unit = {
+
+    val df_temp_table = df.createTempView(view_name)
+
+    val new_param_name = parameter + "_201" + (year + 5).toString
+    val max_value = maxDfYear(parameter, year)
+    val str_number =  "_201" + (year + 5).toString
+    val data = spark.sql("SELECT Score"+ str_number + ",Gov"+str_number+",Economy"+str_number+",Family"+str_number
+      +" from "+view_name+" where "+view_name+"."
+      + new_param_name + "="
+      + max_value
+      + " ORDER BY "+new_param_name)
+    data.show()
+    data
   }
 
 

@@ -17,26 +17,16 @@ object HappinessData extends App {
   val dataframeProcessor = new ProcessData(loadedDf, spark)
 
 
-  val max_gov = dataframeProcessor.maxDf("Gov")
-  val min_gov = dataframeProcessor.minDf("Gov")
-  val avg_gov = dataframeProcessor.avgDf("Gov")
-
-  val max_score = dataframeProcessor.maxDf("Score")
-  val min_score = dataframeProcessor.minDf("Score")
-  val avg_score = dataframeProcessor.avgDf("Score")
-
-  val max_eco = dataframeProcessor.maxDf("Economy")
-  val min_eco = dataframeProcessor.minDf("Economy")
-  val avg_eco = dataframeProcessor.avgDf("Economy")
-
-  val max_family = dataframeProcessor.maxDf("Family")
-  val min_family = dataframeProcessor.minDf("Family")
-  val avg_family = dataframeProcessor.avgDf("Family")
-
-
   dataframeProcessor.displayDf(dataframeProcessor.maxDfYear, "max")
   dataframeProcessor.displayDf(dataframeProcessor.minDfYear, "min")
   dataframeProcessor.displayDf(dataframeProcessor.avgDfYear, "avg")
 
 
+  val index = Array(0,1,2)
+  for (i <- index) yield {
+    val res_score = dataframeProcessor.displayLine(loadedDf,"Score", i, "v_score_"+i.toString)
+    val res_eco = dataframeProcessor.displayLine(loadedDf,"Economy", i, "v_eco_"+i.toString)
+    val res_family = dataframeProcessor.displayLine(loadedDf,"Family", i, "v_family_"+i.toString)
+    val res_gov = dataframeProcessor.displayLine(loadedDf,"Gov", i, "v_gov_"+i.toString)
+  }
 }
