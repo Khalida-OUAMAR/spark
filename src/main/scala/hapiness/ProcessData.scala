@@ -83,7 +83,7 @@ class ProcessData(df: DataFrame, s: SparkSession){
     val new_param_name = parameter + "_201" + (year + 5).toString
     val max_value = maxDfYear(parameter, year)
     val str_number =  "_201" + (year + 5).toString
-    val data = spark.sql("SELECT Score"+ str_number + ",Gov"+str_number+",Economy"+str_number+",Family"+str_number
+    val data = spark.sql("SELECT Country,Score"+ str_number + ",Gov"+str_number+",Economy"+str_number+",Family"+str_number
       +" from "+view_name+" where "+view_name+"."
       + new_param_name + "="
       + max_value
